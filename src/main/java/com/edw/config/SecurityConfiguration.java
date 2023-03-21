@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.web.SecurityFilterChain;
@@ -31,8 +32,12 @@ public class SecurityConfiguration {
                 .oauth2Login()
                 .tokenEndpoint()
                     .and()
-                .userInfoEndpoint()
-                .userAuthoritiesMapper(userAuthoritiesMapper());
+                .userInfoEndpoint();
+
+        http
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
+
         http
                 .authorizeHttpRequests()
                             .requestMatchers("/unauthenticated", "/oauth2/**", "/login/**").permitAll()
@@ -43,11 +48,5 @@ public class SecurityConfiguration {
                     .logoutSuccessUrl("http://localhost:8080/realms/external/protocol/openid-connect/logout?redirect_uri=http://localhost:8081/");
 
         return http.build();
-    }
-    private GrantedAuthoritiesMapper userAuthoritiesMapper() {
-        return (authorities) -> {
-            Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
-            return mappedAuthorities;
-        };
     }
 }
