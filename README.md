@@ -18,7 +18,7 @@ JSON Response reading Keycloak Profile
 ![JSON](images/sboot-keycloak-02.png)
 
 ## Blog Post
-Explanation of this code can be seen on below article, 
+Explanation of this code can be seen on below `Red Hat Developer` article, 
 ```
 https://developers.redhat.com/articles/2023/07/24/how-integrate-spring-boot-3-spring-security-and-keycloak
 ```
