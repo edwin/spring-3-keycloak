@@ -1,0 +1,16 @@
+services:
+  keycloak25:
+    image: "quay.io/keycloak/keycloak:25.0.4"
+    command:
+      - start-dev
+      - --health-enabled=true
+      - --import-realm
+    volumes:
+      - ./keycloak/PowerRanger.json:/opt/keycloak/data/import/PowerRanger.json
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - '8080:8080'
+volumes:
+  keycloak25:
