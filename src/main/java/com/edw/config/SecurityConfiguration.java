@@ -1,5 +1,7 @@
 package com.edw.config;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,6 +20,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+
+    @Value( "${spring.security.oauth2.client.provider.external.issuer-uri}" )
+    private String keycloakUri;
+
+    @Value( "${spring.security.oauth2.client.registration.external.client-id}" )
+    private String keycloakClientId;
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
@@ -40,7 +48,7 @@ public class SecurityConfiguration {
                                 .fullyAuthenticated()
                 .and()
                     .logout()
-                    .logoutSuccessUrl("http://localhost:8080/realms/external/protocol/openid-connect/logout?redirect_uri=http://localhost:8081/");
+                    .logoutSuccessUrl(keycloakUri + "/protocol/openid-connect/logout?client_id=" + keycloakClientId);
 
         return http.build();
     }

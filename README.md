@@ -8,6 +8,22 @@ A sample java code to demonstrate a Spring Boot 3 integration with Keycloak 17. 
 - Keycloak 17
 - Red Hat OpenJDK 17
 
+## Testing Login and Logout Steps
+1. Start Keycloak server locally
+1. Create a realm
+1. Create a client
+1. In client, configure:          
+    - root url: http://localhost:8081
+    - home url: http://localhost:8081/login
+    - valid redirect url: *
+    - valid post logout redirect URIs: * 
+    - web origin: +
+
+1. Goto localhost:8081/login
+1. Keyin username/password
+1. Goto localhost:8081/logout, follow the steps
+1. Expectation is the logout will redirect back to localhost:8081/login
+
 ## Screenshots
 Keycloak User Profile
 
